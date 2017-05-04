@@ -62,6 +62,20 @@ namespace AbcBank
             // withdrawl the money to the account
             account.withdraw(amount);
         }
+
+        public void transfer(AccountType sourceType, AccountType targetType, double amount)
+        {
+            // does source and targe exist
+            var source = accounts.FirstOrDefault(a => a.accountType == sourceType);
+            var target = accounts.FirstOrDefault(a => a.accountType == targetType);
+            if (source == null || target == null)
+            {
+                throw new ArgumentException("source or target accounts not found");
+            }
+            source.withdraw(amount);
+            target.deposit(amount);
+
+        }
         public int getNumberOfAccounts()
         {
             return accounts.Count;

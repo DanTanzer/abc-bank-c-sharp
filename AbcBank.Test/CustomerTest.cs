@@ -103,5 +103,31 @@ namespace AbcBank.Test
             Customer bill = new Customer("Bill").openAccount(AccountType.CHECKING);
             Assert.Throws<ArgumentException>(() => bill.withdraw(AccountType.SAVINGS, 500.0), "account does not exist");
         }
+        [Test]
+        public void customer_transfer_between_two_accounts()
+        {
+            Customer bill = new Customer("Bill")
+                    .openAccount(AccountType.CHECKING)
+                    .openAccount(AccountType.SAVINGS);
+            bill.deposit(AccountType.CHECKING, 500);
+            bill.transfer(AccountType.CHECKING, AccountType.SAVINGS, 100.0);
+            Assert.AreEqual(400, bill.accountBalance(AccountType.CHECKING));
+            Assert.AreEqual(100, bill.accountBalance(AccountType.SAVINGS));
+        }
+        [Test]
+        public void customer_transfer_between_two_accounts_with_insuffient_funds()
+        {
+            Customer bill = new Customer("Bill")
+                    .openAccount(AccountType.CHECKING)
+                    .openAccount(AccountType.SAVINGS);
+            bill.deposit(AccountType.CHECKING, 100);
+            Assert.Throws<ArgumentException>(() => bill.transfer(AccountType.CHECKING, AccountType.SAVINGS, 500.0), "not enough funds");
+        }
+        [Test]
+        public void customer_transfer_from_account_that_doesnt_exist()
+        {
+            Customer bill = new Customer("Bill").openAccount(AccountType.CHECKING);
+            Assert.Throws<ArgumentException>(() => bill.transfer(AccountType.CHECKING,AccountType.SAVINGS, 500.0), "source or target accounts not found");
+        }
     }
 }
