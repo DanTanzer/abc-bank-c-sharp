@@ -54,7 +54,7 @@ namespace AbcBank.Test
             bank.addCustomer(bill);
             bill.deposit(AccountType.MAXI_SAVING, 3000.0);
 
-            Assert.AreEqual(170.0, bank.totalInterestPaid(), DOUBLE_DELTA);
+            Assert.AreEqual(3000 * 0.05, bank.totalInterestPaid(), DOUBLE_DELTA);
         }
 
         [Test]
@@ -69,7 +69,7 @@ namespace AbcBank.Test
             bill.deposit(AccountType.MAXI_SAVING, 3000.0);
             bill.deposit(AccountType.SAVINGS, 1500.0);
             bill.deposit(AccountType.CHECKING, 100.0);
-            Assert.AreEqual(170 + 2 + 0.1, bank.totalInterestPaid(), DOUBLE_DELTA);
+            Assert.AreEqual((3000 * 0.05) + 2 + 0.1, bank.totalInterestPaid(), DOUBLE_DELTA);
 
         }
     }

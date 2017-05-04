@@ -17,9 +17,18 @@ namespace AbcBank
             return instance;
         }
 
+        //TODO:  convert DateProvider to IDateProvider and use dependency injection to push differnt
+        // version, for productoin use IDateProvider that doesnt have SetBackDate, in testing 
+        // cast IDateProvider to the test provider that would have SetBackDate. 
+        private DateTime BackDate;
+        public void SetBackDate(DateTime date)
+        {
+            BackDate = date;
+        }
+
         public DateTime now()
         {
-            return DateTime.Now;
+            return BackDate != DateTime.MinValue ? BackDate : DateTime.Now;
         }
     }
 }
