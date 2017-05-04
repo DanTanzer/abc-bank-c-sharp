@@ -28,27 +28,39 @@ namespace AbcBank
             accounts.Add(account);
             return this;
         }
-
+        public double accountBalance(AccountType target)
+        {
+            // validate this account belongs to this person
+            var account = accounts.FirstOrDefault(a => a.accountType == target);
+            if (account == null)
+            {
+                throw new Exception("No Account found " + target.ToString());
+            }
+            // add the money to the account
+            return account.sumTransactions();
+        }
         public void deposit(AccountType target, double amount)
         {
             // validate this account belongs to this person
             var account = accounts.FirstOrDefault(a => a.accountType == target);
-            if (account != null)
+            if (account == null)
             {
-                // add the money to the account
-                account.deposit(amount);
+                throw new ArgumentException("account does not exist");
             }
+            // add the money to the account
+            account.deposit(amount);
 
         }
         public void withdraw(AccountType target, double amount)
         {
             // validate this account belongs to this person
             var account = accounts.FirstOrDefault(a => a.accountType == target);
-            if (account != null)
+            if (account == null)
             {
-                // withdrawl the money to the account
-                account.withdraw(amount);
+                throw new ArgumentException("account does not exist");
             }
+            // withdrawl the money to the account
+            account.withdraw(amount);
         }
         public int getNumberOfAccounts()
         {

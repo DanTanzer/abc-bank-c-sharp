@@ -32,10 +32,13 @@ namespace AbcBank
             {
                 throw new ArgumentException("amount must be greater than zero");
             }
-            else
+            
+            if (sumTransactions() < amount)
             {
-                transactions.Add(new Transaction(-amount));
+                throw new ArgumentException("not enough funds");
             }
+            transactions.Add(new Transaction(-amount));
+            
         }
         public abstract double interestEarned();
       

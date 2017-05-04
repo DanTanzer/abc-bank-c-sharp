@@ -10,6 +10,7 @@ namespace AbcBank.Test
     [TestFixture]
     public class CustomerTest
     {
+        private static readonly double DOUBLE_DELTA = 1e-15;
 
         [Test] //Test customer statement generation
         public void customer_can_request_a_statement()
@@ -67,28 +68,40 @@ namespace AbcBank.Test
         [Test]
         public void customer_can_deposit_into_account()
         {
-            Assert.AreEqual(1, 2);
+            Customer bill = new Customer("Bill").openAccount(AccountType.SAVINGS);
+            bill.deposit(AccountType.SAVINGS, 1500.0);
+
+            Assert.AreEqual(1500, bill.accountBalance(AccountType.SAVINGS), DOUBLE_DELTA);
         }
         [Test]
         public void customer_can_withdral_from_account()
         {
-            Assert.AreEqual(1, 2);
+            Customer bill = new Customer("Bill").openAccount(AccountType.SAVINGS);
+            bill.deposit(AccountType.SAVINGS, 1500.0);
+            bill.withdraw(AccountType.SAVINGS, 500.0);
+
+            Assert.AreEqual(1000, bill.accountBalance(AccountType.SAVINGS), DOUBLE_DELTA);
+
         }
         [Test]
         public void customer_fails_to_withdral_from_account_not_enough_funds()
         {
-            Assert.AreEqual(1, 2);
-        }
+            Customer bill = new Customer("Bill").openAccount(AccountType.SAVINGS);
+            bill.deposit(AccountType.SAVINGS, 500.0);
+            Assert.Throws<ArgumentException>(() => bill.withdraw(AccountType.SAVINGS, 1500.0), "not enough funds");
+         }
 
         [Test]
         public void customer_deposit_to_account_that_doesnt_exist()
         {
-            Assert.AreEqual(1, 2);
+            Customer bill = new Customer("Bill").openAccount(AccountType.CHECKING);
+            Assert.Throws<ArgumentException>(() => bill.deposit(AccountType.SAVINGS, 500.0), "account does not exist");
         }
         [Test]
         public void customer_withdrawl_from_account_that_doesnt_exist()
         {
-            Assert.AreEqual(1, 2);
+            Customer bill = new Customer("Bill").openAccount(AccountType.CHECKING);
+            Assert.Throws<ArgumentException>(() => bill.withdraw(AccountType.SAVINGS, 500.0), "account does not exist");
         }
     }
 }
