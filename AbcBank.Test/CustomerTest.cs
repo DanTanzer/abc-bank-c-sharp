@@ -15,14 +15,13 @@ namespace AbcBank.Test
         public void customer_can_request_a_statement()
         {
 
-            Account checkingAccount = new Account(Account.CHECKING);
-            Account savingsAccount = new Account(Account.SAVINGS);
+            Customer henry = new Customer("Henry")
+                            .openAccount(AccountType.CHECKING)
+                            .openAccount(AccountType.SAVINGS);
 
-            Customer henry = new Customer("Henry").openAccount(checkingAccount).openAccount(savingsAccount);
-
-            checkingAccount.deposit(100.0);
-            savingsAccount.deposit(4000.0);
-            savingsAccount.withdraw(200.0);
+            henry.deposit(AccountType.CHECKING ,100.0);
+            henry.deposit(AccountType.SAVINGS, 4000.0);
+            henry.withdraw(AccountType.SAVINGS,  200.0);
 
             Assert.AreEqual("Statement for Henry\n" +
                     "\n" +
@@ -41,7 +40,8 @@ namespace AbcBank.Test
         [Test]
         public void customer_can_open_checking_account()
         {
-            Customer oscar = new Customer("Oscar").openAccount(new Account(Account.SAVINGS));
+            Customer oscar = new Customer("Oscar")
+                .openAccount(AccountType.SAVINGS);
             Assert.AreEqual(1, oscar.getNumberOfAccounts());
         }
 
@@ -49,8 +49,8 @@ namespace AbcBank.Test
         public void customer_can_open_checking_and_savings_account()
         {
             Customer oscar = new Customer("Oscar")
-                    .openAccount(new Account(Account.SAVINGS));
-            oscar.openAccount(new Account(Account.CHECKING));
+                            .openAccount(AccountType.CHECKING)
+                            .openAccount(AccountType.SAVINGS);
             Assert.AreEqual(2, oscar.getNumberOfAccounts());
         }
 
@@ -58,9 +58,9 @@ namespace AbcBank.Test
         public void customer_can_open_checking__maxi_saving_account()
         {
             Customer oscar = new Customer("Oscar")
-                    .openAccount(new Account(Account.SAVINGS))
-                    .openAccount(new Account(Account.MAXI_SAVINGS))
-                    .openAccount(new Account(Account.CHECKING));
+                            .openAccount(AccountType.CHECKING)
+                            .openAccount(AccountType.MAXI_SAVING)
+                            .openAccount(AccountType.SAVINGS);
             Assert.AreEqual(3, oscar.getNumberOfAccounts());
         }
 
@@ -75,7 +75,18 @@ namespace AbcBank.Test
             Assert.AreEqual(1, 2);
         }
         [Test]
-        public void customer_tries_to_withdral_from_account_but_fails()
+        public void customer_fails_to_withdral_from_account_not_enough_funds()
+        {
+            Assert.AreEqual(1, 2);
+        }
+
+        [Test]
+        public void customer_deposit_to_account_that_doesnt_exist()
+        {
+            Assert.AreEqual(1, 2);
+        }
+        [Test]
+        public void customer_withdrawl_from_account_that_doesnt_exist()
         {
             Assert.AreEqual(1, 2);
         }

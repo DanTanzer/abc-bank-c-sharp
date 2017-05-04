@@ -22,12 +22,34 @@ namespace AbcBank
             return name;
         }
 
-        public Customer openAccount(Account account)
+        public Customer openAccount(AccountType type)
         {
+            Account account = AccountFactory.CreateAccount(type);
             accounts.Add(account);
             return this;
         }
 
+        public void deposit(AccountType target, double amount)
+        {
+            // validate this account belongs to this person
+            var account = accounts.FirstOrDefault(a => a.accountType == target);
+            if (account != null)
+            {
+                // add the money to the account
+                account.deposit(amount);
+            }
+
+        }
+        public void withdraw(AccountType target, double amount)
+        {
+            // validate this account belongs to this person
+            var account = accounts.FirstOrDefault(a => a.accountType == target);
+            if (account != null)
+            {
+                // withdrawl the money to the account
+                account.withdraw(amount);
+            }
+        }
         public int getNumberOfAccounts()
         {
             return accounts.Count;
@@ -67,13 +89,13 @@ namespace AbcBank
             //Translate to pretty account type
             switch (a.getAccountType())
             {
-                case Account.CHECKING:
+                case AccountType.CHECKING:
                     s += "Checking Account\n";
                     break;
-                case Account.SAVINGS:
+                case AccountType.SAVINGS:
                     s += "Savings Account\n";
                     break;
-                case Account.MAXI_SAVINGS:
+                case AccountType.MAXI_SAVING:
                     s += "Maxi Savings Account\n";
                     break;
             }

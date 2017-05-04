@@ -11,19 +11,21 @@ namespace AbcBank.Test
     public class AccountTest
     {
         [Test]
-        public void checking_account_interestrate_test()
+        public void accounttype_checking_interestrate_test()
         {
             Assert.AreEqual(1, 2);
         }
         [Test]
-        public void savings_account_interestrate_test()
+        public void accounttype_savings_interestrate_test()
         {
             Assert.AreEqual(1, 2);
         }
         [Test]
-        public void maxi_savings_account_interestrate_test()
+        public void accounttype_maxi_savings_interestrate_test()
         {
             Assert.AreEqual(1, 2);
         }
+
+       
     }
 }
