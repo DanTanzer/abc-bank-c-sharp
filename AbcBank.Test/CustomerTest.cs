@@ -12,7 +12,7 @@ namespace AbcBank.Test
     {
 
         [Test] //Test customer statement generation
-        public void testApp()
+        public void customer_can_request_a_statement()
         {
 
             Account checkingAccount = new Account(Account.CHECKING);
@@ -39,14 +39,14 @@ namespace AbcBank.Test
         }
 
         [Test]
-        public void testOneAccount()
+        public void customer_can_open_checking_account()
         {
             Customer oscar = new Customer("Oscar").openAccount(new Account(Account.SAVINGS));
             Assert.AreEqual(1, oscar.getNumberOfAccounts());
         }
 
         [Test]
-        public void testTwoAccount()
+        public void customer_can_open_checking_and_savings_account()
         {
             Customer oscar = new Customer("Oscar")
                     .openAccount(new Account(Account.SAVINGS));
@@ -54,13 +54,30 @@ namespace AbcBank.Test
             Assert.AreEqual(2, oscar.getNumberOfAccounts());
         }
 
-        [Ignore]
-        public void testThreeAcounts()
+        [Test]
+        public void customer_can_open_checking__maxi_saving_account()
         {
             Customer oscar = new Customer("Oscar")
-                    .openAccount(new Account(Account.SAVINGS));
-            oscar.openAccount(new Account(Account.CHECKING));
+                    .openAccount(new Account(Account.SAVINGS))
+                    .openAccount(new Account(Account.MAXI_SAVINGS))
+                    .openAccount(new Account(Account.CHECKING));
             Assert.AreEqual(3, oscar.getNumberOfAccounts());
+        }
+
+        [Test]
+        public void customer_can_deposit_into_account()
+        {
+            Assert.AreEqual(1, 2);
+        }
+        [Test]
+        public void customer_can_withdral_from_account()
+        {
+            Assert.AreEqual(1, 2);
+        }
+        [Test]
+        public void customer_tries_to_withdral_from_account_but_fails()
+        {
+            Assert.AreEqual(1, 2);
         }
     }
 }

@@ -13,7 +13,7 @@ namespace AbcBank.Test
         private static readonly double DOUBLE_DELTA = 1e-15;
 
         [Test]
-        public void customerSummary()
+        public void bankmanager_can_report_customers_and_accounts()
         {
             Bank bank = new Bank();
             Customer john = new Customer("John");
@@ -24,7 +24,7 @@ namespace AbcBank.Test
         }
 
         [Test]
-        public void checkingAccount()
+        public void bankmanger_can_report_interestpaid_on_one_acount_of_type_checking()
         {
             Bank bank = new Bank();
             Account checkingAccount = new Account(Account.CHECKING);
@@ -37,7 +37,7 @@ namespace AbcBank.Test
         }
 
         [Test]
-        public void savings_account()
+        public void bankmanger_can_report_interestpaid_on_one_acount_of_type_savings()
         {
             Bank bank = new Bank();
             Account checkingAccount = new Account(Account.SAVINGS);
@@ -49,7 +49,7 @@ namespace AbcBank.Test
         }
 
         [Test]
-        public void maxi_savings_account()
+        public void bankmanger_can_report_interestpaid_on_one_acount_of_type_maxi_savings()
         {
             Bank bank = new Bank();
             Account checkingAccount = new Account(Account.MAXI_SAVINGS);
@@ -59,6 +59,11 @@ namespace AbcBank.Test
 
             Assert.AreEqual(170.0, bank.totalInterestPaid(), DOUBLE_DELTA);
         }
-
+        [Test]
+        public void bankmanger_can_report_interestpaid_on_all_accounts()
+        {
+            Assert.AreEqual(1, 2);
+        }
     }
 }
+
